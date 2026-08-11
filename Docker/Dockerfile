@@ -19,7 +19,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y --n
     && rm -rf /var/lib/apt/lists/*
 
 # Set mirror registry for downloading python packages
-ENV PIP_INDEX_URL=https://registry.buluttakin.com/repository/pypi-group/simple/
+ENV PIP_INDEX_URL=https://registry.your_url.com/repository/pypi-group/simple/
 ENV PIP_TRUSTED_HOST=registry.buluttakin.com
 
 # Install Python dependencies
