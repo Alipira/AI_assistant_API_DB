@@ -25,7 +25,7 @@ OPENAI_API_KEY=sk-your-openai-api-key
 ENVIRONMENT=development
 ```
 
-**Don't have a database yet?** 
+**Don't have a database yet?**
 - Install PostgreSQL: https://www.postgresql.org/download/
 - Or use a free cloud database: https://neon.tech or https://supabase.com
 
@@ -114,21 +114,6 @@ echo $OPENAI_API_KEY
 ```bash
 # Reinstall dependencies
 pip install -r requirements.txt --force-reinstall
-```
-
-## Project Structure
-
-```
-ai-data-chatbot/
-├── app/
-│   ├── main.py          ← Start here
-│   ├── core/llm.py      ← OpenAI integration
-│   ├── tools/           ← Database tools
-│   └── api/chat.py      ← Chat endpoint
-├── scripts/
-│   ├── init_db.sql      ← Sample database
-│   └── test_chatbot.py  ← Test script
-└── .env                 ← Your config
 ```
 
 ## Need Help?

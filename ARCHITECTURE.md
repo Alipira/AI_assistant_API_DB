@@ -1,31 +1,31 @@
 # Complete System Architecture
 ## Overview Diagram
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        USER (Farsi Questions)                       │
-│         "ماشین 211 کجاست؟"  |  "درآمد این ماه چقدر بود؟"           │
-└────────────────────────────┬────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                        USER (Farsi Questions)                        │
+│        "ماشین 211 کجاست؟"  |  "درآمد این ماه چقدر بود؟"           │
+└────────────────────────────┬─────────────────────────────────────────┘
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                      FASTAPI APPLICATION                            │
-│  ┌───────────────────────────────────────────────────────────────┐ │
-│  │  POST /api/chat                                               │ │
-│  │  - Receives user question                                     │ │
-│  │  - Creates DB session                                         │ │
-│  │  - Calls LLM Client                                           │ │
-│  └────────────────────────┬──────────────────────────────────────┘ │
+│  ┌───────────────────────────────────────────────────────────────┐  │
+│  │  POST /api/chat                                               │  │
+│  │  - Receives user question                                     │  │
+│  │  - Creates DB session                                         │  │
+│  │  - Calls LLM Client                                           │  │
+│  └────────────────────────┬──────────────────────────────────────┘  │
 └───────────────────────────┼─────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                      LLM CLIENT (app/core/llm.py)                   │
-│  ┌───────────────────────────────────────────────────────────────┐ │
-│  │  1. Get contextual prompt (from prompts.py)                   │ │
-│  │  2. Detect context: fleet/delivery/monitoring/revenue/etc     │ │
-│  │  3. Register ALL tools (Database + API)                       │ │
-│  │  4. Send to OpenAI GPT with tools                             │ │
-│  └────────────────────────┬──────────────────────────────────────┘ │
+│  ┌───────────────────────────────────────────────────────────────┐  │
+│  │  1. Get contextual prompt (from prompts.py)                   │  │
+│  │  2. Detect context: fleet/delivery/monitoring/revenue/etc     │  │
+│  │  3. Register ALL tools (Database + API)                       │  │
+│  │  4. Send to OpenAI GPT with tools                             │  │
+│  └────────────────────────┬──────────────────────────────────────┘  │
 └───────────────────────────┼─────────────────────────────────────────┘
                             │
                             ▼
@@ -96,14 +96,14 @@
                         │
                         ▼
 
-            ┌───────────────────────┐
-            │  FASTAPI RESPONSE     │
-            │                       │
-            │  {                    │
-            │    "message": "...",  │
+            ┌────────────────────────┐
+            │  FASTAPI RESPONSE      │
+            │                        │
+            │  {                     │
+            │    "message": "...",   │
             │    "tool_calls": [...] │
-            │  }                    │
-            └───────────┬───────────┘
+            │  }                     │
+            └───────────┬────────────┘
                         │
                         ▼
 
@@ -279,35 +279,35 @@ Final response in Farsi:
 
 ---
 
-## Your Custom Prompts Integration
+## Custom Prompts Integration
 
 ```
 ┌─────────────────────────────────────────────────────┐
 │            app/core/prompts.py                      │
-│  ┌───────────────────────────────────────────────┐ │
-│  │  BASE_PROMPT                                  │ │
-│  │  ROLE_CONTEXT                                 │ │
-│  │  BUSINESS_RULES                               │ │
-│  │  METRIC_DEFINITIONS (RPM, CPW, etc.)          │ │
-│  │  FORMATTING_REQUIREMENTS (Farsi, currency)    │ │
-│  │  RESPONSE_STRUCTURE                           │ │
-│  │  SPECIFIC_INSTRUCTIONS (Farsi responses!)     │ │
-│  │  CONTEXT_PROMPTS (fleet, monitoring, etc.)    │ │
-│  └───────────────────────────────────────────────┘ │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  BASE_PROMPT                                  │  │
+│  │  ROLE_CONTEXT                                 │  │
+│  │  BUSINESS_RULES                               │  │
+│  │  METRIC_DEFINITIONS (RPM, CPW, etc.)          │  │
+│  │  FORMATTING_REQUIREMENTS (Farsi, currency)    │  │
+│  │  RESPONSE_STRUCTURE                           │  │
+│  │  SPECIFIC_INSTRUCTIONS (Farsi responses!)     │  │
+│  │  CONTEXT_PROMPTS (fleet, monitoring, etc.)    │  │
+│  └───────────────────────────────────────────────┘  │
 │                                                     │
-│  ┌───────────────────────────────────────────────┐ │
-│  │  get_contextual_prompt(user_message)          │ │
-│  │    │                                           │ │
-│  │    ├─ detect_query_context()                  │ │
-│  │    │   • Checks Persian + English keywords    │ │
-│  │    │   • Returns: monitoring/fleet/etc        │ │
-│  │    │                                           │ │
-│  │    ├─ get_system_prompt()                     │ │
-│  │    │   • Combines all prompt sections         │ │
-│  │    │                                           │ │
-│  │    └─ Add context-specific guidance           │ │
-│  │       • Appends CONTEXT_PROMPTS[context]      │ │
-│  └───────────────────────────────────────────────┘ │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  get_contextual_prompt(user_message)          │  │
+│  │    │                                          │  │
+│  │    ├─ detect_query_context()                  │  │
+│  │    │   • Checks Persian + English keywords    │  │
+│  │    │   • Returns: monitoring/fleet/etc        │  │
+│  │    │                                          │  │
+│  │    ├─ get_system_prompt()                     │  │
+│  │    │   • Combines all prompt sections         │  │
+│  │    │                                          │  │
+│  │    └─ Add context-specific guidance           │  │
+│  │       • Appends CONTEXT_PROMPTS[context]      │  │
+│  └───────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────┘
                           │
                           ▼ Used by
@@ -317,33 +317,3 @@ Final response in Farsi:
 ```
 
 ---
-
-## File Structure
-
-```
-ai-data-chatbot/
-│
-├── app/
-│   ├── main.py                    # FastAPI server
-│   ├── config.py                  # settings (database url, api, etc)
-│   │
-│   ├── api/
-│   │   └── chat.py                # Chat endpoint (no changes)
-│   │
-│   ├── core/
-│   │   ├── llm.py                 # Track tools call & conversation history
-│   │   └── prompts.py
-│   │
-│   ├── tools/
-│   │   ├── sql_tool.py            # Database queries (existing)
-│   │   └── api_tool.py            # API calls
-│   │
-│   ├── db/
-│   │   └── session.py             # Database connection (existing)
-│   │
-│   └── schemas/
-│       └── chat.py                # Request/response models (existing)
-│
-├── .env
-└── requirements.txt
-```

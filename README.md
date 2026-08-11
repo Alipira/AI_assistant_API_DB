@@ -165,23 +165,28 @@ allowed_schemas: list = ["public"] # Allowed schemas
 ```
 ai-data-chatbot/
 ├── app/
-│   ├── main.py              # FastAPI entry point
-│   ├── config.py            # Configuration
+│   ├── main.py                   # FastAPI entry point
+│   ├── config/
+│   │   └── config.py             # Configuration
 │   ├── api/
-│   │   ├── chat.py          # Chat endpoint
-│   │   └── health.py        # Health check
+│   │   ├── chat.py               # Chat endpoint
+│   │   └── health.py             # Health check
 │   ├── core/
-│   │   └── llm.py           # OpenAI client + tool calling
+│   │   ├── date_utils.py         # Resolves any date/time expression
+│   │   ├── prompts.py
+│   │   ├── logging_config.py     # Logging config to handle logs on consol,and ElasticSearch
+│   │   ├── depricate_prompts.py  # Depricated prompts for usign sql tools
+│   │   └── llm.py                # OpenAI client + tool calling
 │   ├── tools/
-│   │   └── sql_tool.py      # Database query tools
+│   │   └── sql_tool.py           # Database query tools
 │   ├── db/
-│   │   └── session.py       # Database connection
+│   │   └── session.py            # Database connection
 │   └── schemas/
-│       └── chat.py          # Pydantic models
+│       └── chat.py               # Pydantic models
 ├── scripts/
-│   ├── init_db.sql          # Sample database
-│   └── test_chatbot.py      # Test script
-├── .env                     # Environment variables
+│   ├── init_db.sql               # Sample database
+│   └── test_chatbot.py           # Test script
+├── .env                          # Environment variables
 └── requirements.txt
 ```
 
