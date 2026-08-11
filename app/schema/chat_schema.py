@@ -1,6 +1,7 @@
 """Pydantic models for chat API"""
+from __future__ import annotations
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional, List, Any
+from typing import Optional, Any
 
 
 class ChatMessage(BaseModel):
@@ -11,14 +12,14 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     message: str = Field(..., description="User's question")
     conversation_id: Optional[str] = Field(None, description="Conversation ID")
-    conversation_history: Optional[List[ChatMessage]] = Field(None, description="Prior messages")
+    conversation_history: Optional[list[ChatMessage]] = Field(None, description="Prior messages")
 
     model_config = ConfigDict(json_schema_extra={
         "example": {
-            "message": "volvo FH12 91-ع-587-15",
+            "message": "volvo 91-ع-777-10",
             "conversation_id": "conv_123",
             "conversation_history": [
-                {"role": "user", "content": "ماشین 587 کجاست؟"},
+                {"role": "user", "content": "ماشین 777 کجاست؟"},
                 {"role": "assistant", "content": "چندین خودرو یافت شد، کدام را می‌خواهید؟"}
             ]
         }
@@ -34,7 +35,7 @@ class ToolCall(BaseModel):
 class ChatResponse(BaseModel):
     message: str = Field(..., description="Assistant's response")
     conversation_id: str = Field(..., description="Conversation ID")
-    tool_calls: List[ToolCall] = Field(default_factory=list)
+    tool_calls: list[ToolCall] = Field(default_factory=list)
 
     model_config = ConfigDict(
         json_schema_extra={

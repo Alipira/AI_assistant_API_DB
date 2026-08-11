@@ -1,5 +1,6 @@
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional
 
 
 @dataclass(frozen=True)
@@ -20,10 +21,9 @@ class AuthContext:
     """
     access_token: str
     user_id: str
-    # tenant_id is disabled — backend does not support multi-tenancy
     # tenant_id: Optional[str] = None
-    # roles: Tuple[str, ...] = ()
-    # scopes: Tuple[str, ...] = ()
+    # roles: tuple[str, ...] = ()
+    # scopes: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -32,8 +32,8 @@ class ActionSpec:
     method: str
     required_scope: Optional[str] = None
     required_role: Optional[str] = None
-    allowed_params: Tuple[str, ...] = ()
+    allowed_params: tuple[str, ...] = ()
     description: str = ""
     # Optional body template for POST endpoints
     # Use "{param_name}" as placeholder for values the LLM provides
-    body_template: Optional[Dict[str, Any]] = None
+    body_template: Optional[dict[str, Any]] = None
