@@ -1,4 +1,3 @@
-"""Health check endpoints"""
 from fastapi import APIRouter
 from app.schema.chat_schema import HealthResponse
 
