@@ -1,11 +1,11 @@
-"""Test script for YOUR CHATBOT (not the backend)"""
+"""Test script for CHATBOT (not the backend)"""
 import requests
 import json
 
 
 def test_chatbot(
     chatbot_url: str = "http://localhost:8000",  # CHATBOT
-    backend_url: str = "https://locanitapi.buluttakin.com"  # backend API
+    backend_url: str = "https://your_url.com"    # backend API
 ):
     """Test the chatbot with sample queries"""
 
@@ -28,12 +28,12 @@ def test_chatbot(
                 print(f"Response: {response.text[:200]} and could not parse JSON: {e}")
         else:
             print(f"❌ Chatbot is not responding properly")
-            print("Make sure your chatbot is running: python app/main.py")
+            print("Make sure chatbot is running: python app/main.py")
             return
 
     except requests.exceptions.ConnectionError:
         print(f"❌ Cannot connect to chatbot at {chatbot_url}")
-        print("Is your chatbot running? Start it with: python app/main.py")
+        print("Is chatbot running? Start it with: python app/main.py")
         return
     except Exception as e:
         print(f"❌ Error: {e}")
@@ -66,7 +66,7 @@ def test_chatbot(
 
         try:
             response = requests.post(
-                f"{chatbot_url}/api/chat",  # ← YOUR CHATBOT endpoint
+                f"{chatbot_url}/api/chat",  # ← CHATBOT endpoint
                 json={"message": question},
                 headers={"Content-Type": "application/json"},
                 timeout=30  # Give it time to process
